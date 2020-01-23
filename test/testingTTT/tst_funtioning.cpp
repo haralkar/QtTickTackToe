@@ -14,6 +14,7 @@ private slots:
     void initTestCase();
     void cleanupTestCase();
     void test_empy_isnt_finished();
+    void test_is_spot_empty();
 
 };
 
@@ -43,6 +44,12 @@ void funtioning::test_empy_isnt_finished()
 {
     BcTTT ttt{};
     QVERIFY(!ttt.isFinished());
+}
+
+void funtioning::test_is_spot_empty()
+{
+    BcTTT ttt{};
+    QVERIFY(ttt.isEmpty(Coord::center()));
 }
 
 QTEST_APPLESS_MAIN(funtioning)

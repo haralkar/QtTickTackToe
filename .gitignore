@@ -31,3 +31,6 @@
 *.out
 *.app
 build-QtTTT-Desktop_Qt_5_14_0_MinGW_32_bit-Debug/
+build-bcTTT-Desktop_Qt_5_14_0_MinGW_32_bit-Debug/
+build-bcTTT-Desktop_Qt_5_14_0_MinGW_32_bit-Release/
+test/
