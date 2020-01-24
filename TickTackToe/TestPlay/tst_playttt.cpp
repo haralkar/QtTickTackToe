@@ -14,7 +14,7 @@ public:
 
 private slots:
     void test_case1();
-   // void test_is_spot_empty();
+    void test_is_spot_empty();
    // void test_set_spot_isnt_empty();
 
 };
@@ -36,14 +36,16 @@ void playTTT::test_case1()
     QTEST_ASSERT(!ttt.isFinished());
 }
 
-/*
 void playTTT::test_is_spot_empty()
 {
     Play ttt{};
     Spot spot{Spot::Center()};
+    QVERIFY(spot.GetIndex() < 9);
 
     QVERIFY(ttt.isEmpty(spot));
 }
+
+/*
 
 void playTTT::test_set_spot_isnt_empty()
 {

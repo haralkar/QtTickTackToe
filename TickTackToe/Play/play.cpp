@@ -19,7 +19,13 @@ public:
 
 
 Play::Play()
+    : impl_(new Impl{})
 {
+}
+
+Play::~Play()
+{
+    delete impl_;
 }
 
 bool Play::isFinished() const
