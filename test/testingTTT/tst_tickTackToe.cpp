@@ -4,15 +4,15 @@
 
 // add necessary includes here
 
-class funtioning : public QObject
+class TestTTT : public QObject
 {
     Q_OBJECT
 
     BcTTT ttt{};
 
 public:
-    funtioning();
-    ~funtioning();
+    TestTTT();
+    ~TestTTT();
 
 private slots:
     void initTestCase();
@@ -23,40 +23,39 @@ private slots:
 
 };
 
-funtioning::funtioning()
+TestTTT::TestTTT()
 {
 
 }
 
-funtioning::~funtioning()
+TestTTT::~TestTTT()
 {
 
 }
 
-void funtioning::initTestCase()
+void TestTTT::initTestCase()
+{
+    ttt = BcTTT{};
+}
+
+void TestTTT::cleanupTestCase()
 {
 
 }
 
-void funtioning::cleanupTestCase()
-{
 
-}
-
-
-void funtioning::test_empy_isnt_finished()
+void TestTTT::test_empy_isnt_finished()
 {
     QVERIFY(!ttt.isFinished());
 }
 
-void funtioning::test_is_spot_empty()
+void TestTTT::test_is_spot_empty()
 {
     QVERIFY(ttt.isEmpty(Coord::center()));
 }
 
-void funtioning::test_setting_spot_unempties()
+void TestTTT::test_setting_spot_unempties()
 {
-
     ttt.setSpot(Coord::center(), MarkType::X);
     QVERIFY(!ttt.isEmpty(Coord::center()));
 }
