@@ -40,11 +40,15 @@ struct Coord {
         return OrdCoord(a) < OrdCoord(b);
     }
 
-private:
-    int OrdCoord(const Coord &a) const
+    static int OrdCoord(const Coord &a)
     {
-        return SpaceCount(a.cross) + 10* SpaceCount(a.down);
+        return a.OrdCoord();
     }
+    int OrdCoord() const
+    {
+        return SpaceCount(cross) + 3* SpaceCount(down);
+    }
+
 
 };
 
@@ -52,21 +56,33 @@ class BCTTT_EXPORT BcTTT
 {
 public:
     BcTTT();
-    bool isFinished() const {return false;}
-    bool isEmpty(const Coord &coord) const
-    {
-        return false;
-        //auto mark= field_.find(coord);
-        //return mark == field_.end();
-    }
-
-    void setSpot(Coord coord, MarkType mark) {
-        //field_.emplace(coord,mark);
-    }
+    bool isFinished() const;
+    bool isEmpty(const Coord &coord) const;
+    void setSpot(Coord coord, MarkType mark);
 
 private:
-    //std::map<Coord,MarkType,Coord> field_;//(ordCoord);
-
+    MarkType field_[9];
 };
+
+BcTTT::BcTTT()
+{
+    for (int i = 0; i<9; i++)
+        field_ [i] = MarkType::Empty;
+}
+bool BcTTT::isFinished() const
+{
+    return false;
+}
+bool BcTTT::isEmpty(const Coord &coord) const
+{
+    return field_[coord.OrdCoord()] == MarkType::Empty;
+}
+
+void BcTTT::setSpot(Coord coord, MarkType mark)
+{
+    field_[coord.OrdCoord()] = mark;
+}
+
+
 
 #endif // BCTTT_H
