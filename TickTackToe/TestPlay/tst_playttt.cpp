@@ -15,7 +15,7 @@ public:
 private slots:
     void test_case1();
     void test_is_spot_empty();
-   // void test_set_spot_isnt_empty();
+    void test_set_spot_isnt_empty();
 
 };
 
@@ -45,7 +45,6 @@ void playTTT::test_is_spot_empty()
     QVERIFY(ttt.isEmpty(spot));
 }
 
-/*
 
 void playTTT::test_set_spot_isnt_empty()
 {
@@ -55,7 +54,7 @@ void playTTT::test_set_spot_isnt_empty()
     ttt.setSpot(spot,Mark::X);
     QVERIFY(!ttt.isEmpty(spot));
 }
-// */
+/* // */
 QTEST_APPLESS_MAIN(playTTT)
 
 #include "tst_playttt.moc"
