@@ -60,6 +60,6 @@ void TestTTT::test_setting_spot_unempties()
     QVERIFY(!ttt.isEmpty(Coord::center()));
 }
 
-QTEST_APPLESS_MAIN(funtioning)
+QTEST_APPLESS_MAIN(TestTTT)
 
-#include "tst_funtioning.moc"
+#include "tst_tickTackToe.moc"

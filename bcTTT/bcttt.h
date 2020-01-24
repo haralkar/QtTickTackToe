@@ -4,6 +4,7 @@
 #include "bcTTT_global.h"
 #include <map>
 
+QT_BEGIN_NAMESPACE
 enum class MarkType {
     Empty,
     X,
@@ -64,6 +65,7 @@ private:
     MarkType field_[9];
 };
 
+/*
 BcTTT::BcTTT()
 {
     for (int i = 0; i<9; i++)
@@ -82,7 +84,7 @@ void BcTTT::setSpot(Coord coord, MarkType mark)
 {
     field_[coord.OrdCoord()] = mark;
 }
+// */
 
-
-
+QT_END_NAMESPACE
 #endif // BCTTT_H

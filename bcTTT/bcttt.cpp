@@ -1,10 +1,14 @@
 #include "bcttt.h"
-/*
+//*
+
+QT_BEGIN_NAMESPACE
+
 BcTTT::BcTTT()
 {
     for (int i = 0; i<9; i++)
         field_ [i] = MarkType::Empty;
 }
+
 bool BcTTT::isFinished() const
 {
     return false;
@@ -18,4 +22,6 @@ void BcTTT::setSpot(Coord coord, MarkType mark)
 {
     field_[coord.OrdCoord()] = mark;
 }
+
+QT_END_NAMESPACE
 // */
