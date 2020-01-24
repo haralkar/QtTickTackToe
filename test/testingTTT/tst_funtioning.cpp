@@ -1,10 +1,14 @@
 #include <QtTest>
 
+#include "bcttt.h"
+
 // add necessary includes here
 
 class funtioning : public QObject
 {
     Q_OBJECT
+
+    BcTTT ttt{};
 
 public:
     funtioning();
@@ -39,23 +43,19 @@ void funtioning::cleanupTestCase()
 
 }
 
-#include "bcttt.h"
 
 void funtioning::test_empy_isnt_finished()
 {
-    BcTTT ttt{};
     QVERIFY(!ttt.isFinished());
 }
 
 void funtioning::test_is_spot_empty()
 {
-    BcTTT ttt{};
     QVERIFY(ttt.isEmpty(Coord::center()));
 }
 
 void funtioning::test_setting_spot_unempties()
 {
-    BcTTT ttt{};
 
     ttt.setSpot(Coord::center(), MarkType::X);
     QVERIFY(!ttt.isEmpty(Coord::center()));
