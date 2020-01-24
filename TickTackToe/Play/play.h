@@ -31,11 +31,12 @@ class PLAY_EXPORT Play
 {
 public:
     Play();
-    ~   Play();
+    ~Play();
 
     bool isFinished() const ;
     bool isEmpty(const Spot &spot) const;
     void setSpot(const Spot &spot, const Mark &mark);
+    Mark getSpot(const Spot &spot) const;
 private:
     class Impl;
     Impl *impl_{};

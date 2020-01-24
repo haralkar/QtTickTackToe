@@ -9,9 +9,13 @@ public:
     {
         field_[spot.GetIndex()] = mark;
     }
+    Mark getSpot(const Spot &spot) const
+    {
+        return field_[spot.GetIndex()];
+    }
     bool isEmpty(const Spot &spot) const
     {
-        return field_[spot.GetIndex()] == Mark::Empty;
+        return getSpot(spot) == Mark::Empty;
     }
 };
 
@@ -41,4 +45,9 @@ bool Play::isEmpty(const Spot &spot) const
 void Play::setSpot(const Spot &spot, const Mark &mark)
 {
     impl_->set(spot,mark);
+}
+
+Mark Play::getSpot(const Spot &spot) const
+{
+    return impl_->getSpot(spot);
 }
