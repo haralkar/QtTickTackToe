@@ -1,15 +1,17 @@
 #include "display.h"
 #include "ui_display.h"
 
-Display::Display(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::Display)
+#include <QGraphicsLinearLayout>
+#include <QGraphicsGridLayout>
+
+Display::Display(QGraphicsWidget *parent )
+    : QGraphicsWidget(parent, Qt::Window)
 {
-    ui->setupUi(this);
+    QGraphicsLinearLayout *windowLayout {new QGraphicsLinearLayout(Qt::Vertical)};
+    QGraphicsLinearLayout *linear {new QGraphicsLinearLayout(windowLayout)};
 }
 
 Display::~Display()
 {
-    delete ui;
 }
 
