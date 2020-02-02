@@ -42,6 +42,7 @@ public:
     void setSpot(const Spot &spot, const Mark &mark);
     Mark getSpot(const Spot &spot) const;
 
+    bool isWinningMove(Spot const &spot, Mark mark) const;
     Spot findBestMove() const;
 private:
     class Impl;

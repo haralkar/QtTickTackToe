@@ -24,6 +24,7 @@ private slots:
     void test_find_best_spot_empty();
     void test_find_best_spot_a_corner();
 
+    void test_is_winning_move();
 };
 
 playTTT::playTTT()
@@ -101,6 +102,16 @@ void playTTT::test_find_best_spot_a_corner()
 
     Spot nextSpot{ttt.findBestMove()};
     QVERIFY( nextSpot.cross_ == Side::Left && nextSpot.down_ == Side::Left);
+}
+
+void playTTT::test_is_winning_move()
+{
+    Play ttt{};
+    ttt.setSpot(Spot::Center(), Mark::X);
+    ttt.setSpot(Spot{Side::Left, Side::Left}, Mark::X);
+
+    QVERIFY(ttt.isWinningMove(Spot{Side::Right,Side::Right}, Mark::X));
+
 }
 
 

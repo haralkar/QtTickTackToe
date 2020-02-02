@@ -21,9 +21,15 @@ public:
     {
         Spot pick = Spot::Center();
         if (isEmpty(pick))
-        return Spot{}.setSpot(Side::Center, Side::Center);
+            return Spot{}.setSpot(Side::Center, Side::Center);
         else
             return Spot{}.setSpot(Side::Left, Side::Left);
+    }
+    bool isWinningMove(const Spot &spot, Mark mark) const
+    {
+        (void) spot;
+        (void) mark;
+        return true;
     }
 };
 
@@ -70,6 +76,11 @@ void Play::setSpot(const Spot &spot, const Mark &mark)
 Mark Play::getSpot(const Spot &spot) const
 {
     return impl_->getSpot(spot);
+}
+
+bool Play::isWinningMove(const Spot &spot, Mark mark) const
+{
+    return impl_-> isWinningMove(spot, mark) ;
 }
 
 Spot Play::findBestMove() const
