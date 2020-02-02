@@ -27,6 +27,8 @@ public:
     }
     bool isWinningMove(const Spot &spot, Mark mark) const
     {
+        if (!isEmpty(spot))
+            return false;
         (void) spot;
         (void) mark;
         return true;
