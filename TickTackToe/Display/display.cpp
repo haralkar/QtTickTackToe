@@ -44,22 +44,19 @@ Display::~Display()
 
 void Display::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    qreal t,b,l,r;
-    m_grid->getContentsMargins(&l,&t,&r,&b);
     QPointF pos{ event->pos()};
-    int x = (pos.rx()-10) / m_width;
-    int y = (pos.ry()-10) / m_width;
+    int col = (pos.rx()-10) / m_width; // rudely assuming observed values.
+    int row = (pos.ry()-10) / m_width;
 
-    if (x >2 || y > 2 ||  x <0 || y < 0)
+    if (col >2 || row > 2 ||  col <0 || row < 0)
     {
         std::cerr << "Out of bounds click " << pos.rx() << ", " << pos.ry() << "\n";
         return;
     }
 
-    if (auto item = dynamic_cast<BoxItem*>(m_grid->itemAt(x,y)->graphicsItem()))
+    if (auto item = dynamic_cast<BoxItem*>(m_grid->itemAt(row,col)->graphicsItem()))
     {
-       std::cerr<<"At Pos: " << x << ", " << y << "\n";
-       (void)item;
+       std::cerr<<"At Pos: " << row << col << ", " << "\n";
 
        item->markX();
        m_grid->invalidate();
