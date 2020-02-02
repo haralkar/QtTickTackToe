@@ -20,6 +20,18 @@ public:
 };
 
 
+Spot Spot::setSpot(Side cross, Side down)
+{
+    cross_ = cross;
+    down_ = down;
+    return *this;
+}
+
+bool Spot::sameAs(const Spot &other) const
+{
+   return down_ == other.down_ && cross_ == other.cross_;
+}
+
 
 
 Play::Play()
@@ -50,4 +62,9 @@ void Play::setSpot(const Spot &spot, const Mark &mark)
 Mark Play::getSpot(const Spot &spot) const
 {
     return impl_->getSpot(spot);
+}
+
+Spot Play::findBestMove() const
+{
+    return Spot{}.setSpot(Side::Center, Side::Center);
 }

@@ -25,6 +25,10 @@ struct Spot
     {
         return (unsigned int)down_ + 3*(unsigned int)cross_;
     }
+
+   bool sameAs(Spot const &other) const;
+
+   Spot setSpot(Side cross, Side down);
 };
 
 class PLAY_EXPORT Play
@@ -37,6 +41,8 @@ public:
     bool isEmpty(const Spot &spot) const;
     void setSpot(const Spot &spot, const Mark &mark);
     Mark getSpot(const Spot &spot) const;
+
+    Spot findBestMove() const;
 private:
     class Impl;
     Impl *impl_{};
