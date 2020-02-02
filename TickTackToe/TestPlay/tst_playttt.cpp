@@ -22,6 +22,7 @@ private slots:
     void test_get_mark();
 
     void test_find_best_spot_empty();
+    void test_find_best_spot_a_corner();
 
 };
 
@@ -90,6 +91,18 @@ void playTTT::test_find_best_spot_empty()
     Spot spot{ttt.findBestMove()};
     QVERIFY( spot.cross_ == Side::Center && spot.down_ == Side::Center);
 }
+
+void playTTT::test_find_best_spot_a_corner()
+{
+    Play ttt{};
+
+    Spot spot{ttt.findBestMove()};
+    ttt.setSpot(spot, Mark::X);
+
+    QVERIFY( spot.cross_ == Side::Left && spot.down_ == Side::Left);
+}
+
+
 /* // */
 QTEST_APPLESS_MAIN(playTTT)
 

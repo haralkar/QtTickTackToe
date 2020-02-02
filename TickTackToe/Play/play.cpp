@@ -17,6 +17,14 @@ public:
     {
         return getSpot(spot) == Mark::Empty;
     }
+    Spot findBestMove()
+    {
+        Spot pick = Spot::Center();
+        if (isEmpty(pick))
+        return Spot{}.setSpot(Side::Center, Side::Center);
+        else
+        return Spot{}.setSpot(Side::Left, Side::Left);
+    }
 };
 
 
@@ -66,5 +74,5 @@ Mark Play::getSpot(const Spot &spot) const
 
 Spot Play::findBestMove() const
 {
-    return Spot{}.setSpot(Side::Center, Side::Center);
+    return impl_-> findBestMove();
 }
