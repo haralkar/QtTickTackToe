@@ -8,8 +8,10 @@
 
 class BoxItem : public QGraphicsLayoutItem, public QGraphicsItem
 {
+    int m_X{};
+    int m_Y{};
 public:
-    BoxItem(QGraphicsItem *parent = nullptr);
+    BoxItem(int x, int y, QGraphicsItem *parent = nullptr);
 
     void setGeometry(const QRectF &rect) override;
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const override;
@@ -17,7 +19,9 @@ public:
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
 private:
-    QPixmap m_pix{};
+    QPixmap m_pix_X{};
+    QPixmap m_pix_L{};
+    QPixmap m_pix_O{};
 };
 
 #endif // BOX_H
