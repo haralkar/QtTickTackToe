@@ -51,6 +51,19 @@ void BoxItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 
     QPointF pixpos { 0, 0};
 
-    painter->drawPixmap(pixpos, m_pix_O);
+    painter->drawPixmap(pixpos,
+                m_mark== MarkType::Omark? m_pix_O:
+                m_mark== MarkType::Xmark? m_pix_X
+                          :m_pix_L );
+}
 
+
+void BoxItem::markX()
+{
+    m_mark = MarkType::Xmark;
+}
+
+void BoxItem::markO()
+{
+    m_mark = MarkType::Omark;
 }

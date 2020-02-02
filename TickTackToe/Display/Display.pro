@@ -38,7 +38,7 @@ RESOURCES += \
     marks.qrc
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Play/ -lPlay
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Play/ -lPlayd
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Play/ -lPlay
 else:unix: LIBS += -L$$OUT_PWD/../Play/ -lPlay
 
 INCLUDEPATH += $$PWD/../Play

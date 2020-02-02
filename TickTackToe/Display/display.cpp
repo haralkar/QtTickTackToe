@@ -60,6 +60,9 @@ void Display::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     {
        std::cerr<<"At Pos: " << x << ", " << y << "\n";
        (void)item;
+
+       item->markX();
+       m_grid->invalidate();
     }
     else
     {
