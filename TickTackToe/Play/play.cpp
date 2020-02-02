@@ -34,7 +34,7 @@ public:
         for (auto itr = moves.begin(); itr != moves.end(); itr++)
         {
             if (isEmpty(*itr))
-        return *itr;
+                return *itr;
         }
 
         // shouldnt happen unless the grid is full:
