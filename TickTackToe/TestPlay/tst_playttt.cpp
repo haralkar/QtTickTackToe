@@ -17,6 +17,7 @@ private slots:
     //void cleanupTestCase();
 
     void test_case1();
+    void test_isFinished();
     void test_is_spot_empty();
     void test_set_spot_isnt_empty();
     void test_get_mark();
@@ -54,6 +55,15 @@ void playTTT::test_case1()
 {
     Play ttt{};
     QTEST_ASSERT(!ttt.isFinished());
+}
+void playTTT::test_isFinished()
+{
+    Play ttt{};
+    for (int i = 0 ; i < 9 ; i++ )
+    {
+        ttt.setSpot(Spot::FromIndex(i), Mark::X);
+    }
+    QTEST_ASSERT(ttt.isFinished());
 }
 
 void playTTT::test_is_spot_empty()

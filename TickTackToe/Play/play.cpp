@@ -5,7 +5,7 @@
 class Play::Impl {
 public:
     Mark field_[9]{};
-    const std::vector<Spot> moves {
+    const std::vector<Spot> moves_ {
         Spot::Center(),
     Spot::FromIndex(0),
     Spot::FromIndex(2),
@@ -25,16 +25,27 @@ public:
     {
         return field_[spot.GetIndex()];
     }
+    bool isFinished() const
+    {
+        for ( auto s : field_)
+        {
+            if (s == Mark::Empty)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
     bool isEmpty(const Spot &spot) const
     {
         return getSpot(spot) == Mark::Empty;
     }
     Spot findBestMove()
     {
-        for (auto itr = moves.begin(); itr != moves.end(); itr++)
+        for (auto m:  moves_)
         {
-            if (isEmpty(*itr))
-                return *itr;
+            if (isEmpty(m))
+                return m;
         }
 
         // shouldnt happen unless the grid is full:
@@ -74,7 +85,7 @@ Play::~Play()
 
 bool Play::isFinished() const
 {
-    return false;
+    return impl_->isFinished();
 }
 
 bool Play::isEmpty(const Spot &spot) const

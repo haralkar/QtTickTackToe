@@ -54,6 +54,12 @@ void Display::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         return;
     }
 
+    if (m_game.isFinished())
+    {
+        std::cerr<<"Game over";
+        return;
+    }
+
     if (auto item = dynamic_cast<BoxItem*>(m_grid->itemAt(row,col)->graphicsItem()))
     {
        std::cerr<<"At Pos: " << row << col << ", " << "\n";
