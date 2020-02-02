@@ -26,7 +26,7 @@ QSizeF BoxItem::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
     switch (which) {
     case Qt::MinimumSize:
     case Qt::PreferredSize:
-        return m_pix_O.size();//*3 + QSize(30,30);
+        return m_pix_O.size();
     case Qt::MaximumSize:
         return QSizeF(1000,1000);
     default:
@@ -45,7 +45,7 @@ void BoxItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
    Q_UNUSED(widget);
    Q_UNUSED(option);
 
-    QRectF frame(QPointF(m_X*30, m_Y*30), geometry().size());
+    QRectF frame(QPointF(m_X*60, m_Y*60), geometry().size());
     //const QSize psSize = m_pix.size();
     QGradientStops stops;
 
