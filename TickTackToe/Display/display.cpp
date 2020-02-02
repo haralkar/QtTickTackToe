@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "display.h"
 #include "ui_display.h"
 #include "boxitem.h"
@@ -29,38 +31,32 @@ Display::Display(QGraphicsWidget *parent )
         }
     }
     if (m_width == 0)
-        m_width = 90;
+        m_width = 65;  // Taking the liberty of straight up guessing width and item space between items.
 
-    //linear->setStretchFactor(item,1);
     windowLayout->addItem(m_grid);
     setLayout(windowLayout);
 }
 
 
-#include <iostream>
 
 void Display::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     qreal t,b,l,r;
-    m_grid->getContentsMargins(&t,&b,&l,&r);
+    m_grid->getContentsMargins(&l,&t,&r,&b);
     QPointF pos1{ event->lastScenePos()};
     QPointF pos{ event->pos()};
     std::cerr << pos.rx() << " " << pos.ry()<<"\n";
     std::cerr << pos1.rx() << " " << pos1.ry()<<"\n";
-    int x = (pos.rx()-l) / m_width;
-    int y = (pos.ry()-t) / m_width;
+    int x = (pos.rx()-10) / m_width;
+    int y = (pos.ry()-10) / m_width;
+
     if (x >2 || y > 2 ||  x <0 || y < 0)
     {
-        BoxItem it(4,4);
-        qreal t,b,l,r;
-        it.getContentsMargins(&t,&b,&l,&r);
-        std::cerr << " item thingy" << (int)t << ", " <<  (int)b << ", " << (int)r << ", " << (int)l << "\n";
-        std::cerr << "Out of bounds click " << pos.rx() << ", " << pos.ry() << "(width "<< it.geometry().width() <<"\n";
+        std::cerr << "Out of bounds click " << pos.rx() << ", " << pos.ry() << "\n";
         return;
     }
 
     std::cerr<< "Checking point " << x << ", " << y << "\n";
-    //if (QGraphicsGridLayout *layout = dynamic_cast<QGraphicsGridLayout*>(this->layout()))
     if (auto item = dynamic_cast<BoxItem*>(m_grid->itemAt(x,y)->graphicsItem()))
     {
        std::cerr<<"At Pos: " << x << ", " << y << "\n";
