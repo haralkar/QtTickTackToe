@@ -23,7 +23,7 @@ public:
         if (isEmpty(pick))
         return Spot{}.setSpot(Side::Center, Side::Center);
         else
-        return Spot{}.setSpot(Side::Left, Side::Left);
+            return Spot{}.setSpot(Side::Left, Side::Left);
     }
 };
 

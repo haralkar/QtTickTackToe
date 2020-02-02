@@ -99,7 +99,8 @@ void playTTT::test_find_best_spot_a_corner()
     Spot spot{ttt.findBestMove()};
     ttt.setSpot(spot, Mark::X);
 
-    QVERIFY( spot.cross_ == Side::Left && spot.down_ == Side::Left);
+    Spot nextSpot{ttt.findBestMove()};
+    QVERIFY( nextSpot.cross_ == Side::Left && nextSpot.down_ == Side::Left);
 }
 
 
