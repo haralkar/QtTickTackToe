@@ -11,7 +11,6 @@ Display::Display(QGraphicsWidget *parent )
     : QGraphicsWidget(parent, Qt::Window)
 {
     QGraphicsLinearLayout *windowLayout {new QGraphicsLinearLayout(Qt::Vertical)};
-    //QGraphicsLinearLayout *linear {new QGraphicsLinearLayout(windowLayout)};
 
     m_grid = new QGraphicsGridLayout();//windowLayout);
     m_grid->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
@@ -37,16 +36,17 @@ Display::Display(QGraphicsWidget *parent )
     setLayout(windowLayout);
 }
 
+Display::~Display()
+{
+}
+
 
 
 void Display::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     qreal t,b,l,r;
     m_grid->getContentsMargins(&l,&t,&r,&b);
-    QPointF pos1{ event->lastScenePos()};
     QPointF pos{ event->pos()};
-    std::cerr << pos.rx() << " " << pos.ry()<<"\n";
-    std::cerr << pos1.rx() << " " << pos1.ry()<<"\n";
     int x = (pos.rx()-10) / m_width;
     int y = (pos.ry()-10) / m_width;
 
@@ -56,7 +56,6 @@ void Display::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         return;
     }
 
-    std::cerr<< "Checking point " << x << ", " << y << "\n";
     if (auto item = dynamic_cast<BoxItem*>(m_grid->itemAt(x,y)->graphicsItem()))
     {
        std::cerr<<"At Pos: " << x << ", " << y << "\n";
@@ -69,7 +68,8 @@ void Display::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     return;
 }
 
-Display::~Display()
-{
-}
 
+void Display::setGame(Play &&game)
+{
+    m_game = game;
+}
