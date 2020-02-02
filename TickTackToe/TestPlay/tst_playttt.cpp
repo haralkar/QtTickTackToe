@@ -118,7 +118,6 @@ void playTTT::test_is_winning_move_tl_diag()
     ttt.setSpot(Spot{Side::Left, Side::Left}, Mark::X);
 
     QVERIFY(ttt.isWinningMove(Spot{Side::Right,Side::Right}, Mark::X));
-    //QVERIFY(!ttt.isWinningMove(Spot{Side::Right,Side::Right}, Mark::O));
 
 }
 

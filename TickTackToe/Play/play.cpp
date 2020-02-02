@@ -1,9 +1,21 @@
 #include "play.h"
 
+#include<vector>
 
 class Play::Impl {
 public:
     Mark field_[9]{};
+    const std::vector<Spot> moves {
+        Spot::Center(),
+    Spot::FromIndex(0),
+    Spot::FromIndex(2),
+    Spot::FromIndex(6),
+    Spot::FromIndex(8),
+    Spot::FromIndex(7),
+    Spot::FromIndex(1),
+    Spot::FromIndex(3),
+    Spot::FromIndex(5),
+    };
 
     void set(const Spot &spot, const Mark &mark)
     {
@@ -19,19 +31,19 @@ public:
     }
     Spot findBestMove()
     {
-        Spot pick = Spot::Center();
-        if (isEmpty(pick))
-            return Spot{}.setSpot(Side::Center, Side::Center);
-        else
-            return Spot{}.setSpot(Side::Left, Side::Left);
+        for (auto itr = moves.begin(); itr != moves.end(); itr++)
+        {
+            if (isEmpty(*itr))
+        return *itr;
+        }
+
+        // shouldnt happen unless the grid is full:
+        return Spot::Center();
     }
     bool isWinningMove(const Spot &spot, Mark mark) const
     {
-        if (!isEmpty(spot))
-            return false;
-        (void) spot;
-        (void) mark;
-        return true;
+        // At least it is valid and could be on the best path
+        return isEmpty(spot);
     }
 };
 
