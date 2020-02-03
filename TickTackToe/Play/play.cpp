@@ -1,6 +1,7 @@
 #include "play.h"
 
 #include<vector>
+#include<functional>
 
 class Play::Impl {
 public:
@@ -40,11 +41,11 @@ public:
     {
         return getSpot(spot) == Mark::Empty;
     }
-    Spot findBestMove()
+    Spot findBestMove(std::function<bool(const Spot&)> check)
     {
         for (auto m:  moves_)
         {
-            if (isEmpty(m))
+            if (check(m))
                 return m;
         }
 
@@ -110,5 +111,5 @@ bool Play::isWinningMove(const Spot &spot, Mark mark) const
 
 Spot Play::findBestMove() const
 {
-    return impl_-> findBestMove();
+    return impl_-> findBestMove([&](Spot const &spot){ return isEmpty(spot);});
 }
