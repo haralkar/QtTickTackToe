@@ -1,2 +1,2 @@
 # QtTickTackToe
-Finger practice, the T's v. a stumbling computer 
+Qt and TDD (mostly), the T's v. a stumbling computer 
