@@ -9,6 +9,15 @@ enum class Mark {
     X,
     O,
 };
+//Mark operator++(Mark other);
+inline Mark operator++(Mark other)
+{
+    switch (other) {
+        case Mark::X: return Mark::O;
+        case Mark::O: return Mark::X;
+        default: return Mark::Empty;
+    }
+}
 
 enum class Side : unsigned int
 {

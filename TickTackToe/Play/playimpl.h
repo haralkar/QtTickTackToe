@@ -23,6 +23,11 @@ public:
         Spot::FromIndex(3),
         Spot::FromIndex(5),
     };
+    std::vector<Spot> spotify(int a, int b, int c) {return {Spot::FromIndex(a),Spot::FromIndex(b),Spot::FromIndex(c)};}
+    const std::vector<std::vector<Spot>> winningIndeces_
+    {
+        spotify(0,4,8), // diag tl->br
+    };
     void set(const Spot &spot, const Mark &mark);
     Mark getSpot(const Spot &spot) const;
     bool isFinished() const;

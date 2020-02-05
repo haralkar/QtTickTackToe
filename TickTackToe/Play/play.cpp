@@ -2,6 +2,7 @@
 #include "playimpl.h"
 
 
+
 Spot Spot::setSpot(Side cross, Side down)
 {
     cross_ = cross;

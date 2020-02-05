@@ -47,6 +47,15 @@ Spot Play::Impl::findBestMove(std::function<bool (const Spot &)> check)
 bool Play::Impl::isWinningMove(const Spot &spot, Mark mark) const
 {
     // At least it is valid and could be on the best path
-    return isEmpty(spot);
+    (void) mark;
+    if (!isEmpty(spot)) return false;
+
+    /*
+    auto a = winningIndeces_[0];
+    std::all_of(a, []{})
+    {
+
+    }*/
+    return false;
 }
 

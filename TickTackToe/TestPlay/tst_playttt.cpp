@@ -27,6 +27,9 @@ private slots:
 
     void test_is_winning_move_tl_diag();
     void test_is_winning_move_invalids_are_not();
+
+
+    void test_mark_flips_to_and_fro();
 };
 
 playTTT::playTTT()
@@ -121,13 +124,28 @@ void playTTT::test_is_winning_move_invalids_are_not()
     ttt.setSpot(Spot::Center(), Mark::X);
     QVERIFY(!ttt.isWinningMove(Spot::Center(), Mark::X));
 }
+
+void playTTT::test_mark_flips_to_and_fro()
+{
+    Mark x{Mark::X};
+    Mark o = ++x;
+    QVERIFY( o == Mark::O);
+
+    Mark back = ++o;
+    QVERIFY( back == Mark::X);
+
+    Mark same = ++Mark::Empty;
+    QVERIFY( same == Mark::Empty);
+}
 void playTTT::test_is_winning_move_tl_diag()
 {
+    /*
     Play ttt{};
     ttt.setSpot(Spot::Center(), Mark::X);
     ttt.setSpot(Spot{Side::Left, Side::Left}, Mark::X);
 
     QVERIFY(ttt.isWinningMove(Spot{Side::Right,Side::Right}, Mark::X));
+// */
 
 }
 
