@@ -49,6 +49,8 @@ struct Spot
 
    Spot setSpot(Side cross, Side down);
    std::pair<Spot,Spot> left(Spot const &here) const;
+
+   bool operator==(Spot const &other) const { return other.cross_ == cross_ && other.down_ == down_;}
 };
 
 class PLAY_EXPORT Play

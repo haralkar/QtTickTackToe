@@ -139,7 +139,7 @@ void playTTT::test_mark_flips_to_and_fro()
 }
 void playTTT::test_is_winning_move_tl_diag()
 {
-    /*
+    //*
     Play ttt{};
     ttt.setSpot(Spot::Center(), Mark::X);
     ttt.setSpot(Spot{Side::Left, Side::Left}, Mark::X);
