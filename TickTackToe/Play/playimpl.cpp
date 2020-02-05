@@ -49,7 +49,13 @@ bool Play::Impl::isWinningMove(const Spot &spot, Mark mark) const
     if (!isEmpty(spot))
         return false;
 
-    auto a = winningIndeces_[0];
-    return std::all_of(a.begin(), a.end(), [&](Spot const s){ return getSpot(s) == mark || s == spot;});
+    auto current = winningIndeces_.begin();
+    auto findNext = [&](){return find_if(current, winningIndeces_.end(), [&spot](std::vector<Spot> row){return find(row.begin(),row.end(),spot)!= row.end();});};
+    for (current = findNext(); current != winningIndeces_.end();  current = findNext())
+    {
+        if (std::all_of(current->begin(), current->end(), [&](Spot const s){ return s == spot || getSpot(s) == mark ;}))
+            return true;
+    }
+    return false;
 }
 

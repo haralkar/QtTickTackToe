@@ -26,6 +26,7 @@ public:
     std::vector<Spot> spotify(int a, int b, int c) {return {Spot::FromIndex(a),Spot::FromIndex(b),Spot::FromIndex(c)};}
     const std::vector<std::vector<Spot>> winningIndeces_
     {
+        spotify(0,1,2), // top line across
         spotify(0,4,8), // diag tl->br
     };
     void set(const Spot &spot, const Mark &mark);

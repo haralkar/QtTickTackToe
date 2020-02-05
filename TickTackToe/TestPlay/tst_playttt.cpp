@@ -26,7 +26,10 @@ private slots:
     void test_find_best_spot_a_corner();
 
     void test_is_winning_move_tl_diag();
+    void test_is_winning_move_empty_but_out_of_line();
     void test_is_winning_move_invalids_are_not();
+
+    void test_blocking_move_isnt_winning_move_tl_diag();
 
 
     void test_mark_flips_to_and_fro();
@@ -139,13 +142,29 @@ void playTTT::test_mark_flips_to_and_fro()
 }
 void playTTT::test_is_winning_move_tl_diag()
 {
-    //*
     Play ttt{};
     ttt.setSpot(Spot::Center(), Mark::X);
     ttt.setSpot(Spot{Side::Left, Side::Left}, Mark::X);
 
     QVERIFY(ttt.isWinningMove(Spot{Side::Right,Side::Right}, Mark::X));
-// */
+}
+
+void playTTT::test_blocking_move_isnt_winning_move_tl_diag()
+{
+    Play ttt{};
+    ttt.setSpot(Spot::Center(), Mark::X);
+    ttt.setSpot(Spot{Side::Left, Side::Left}, Mark::X);
+
+    QVERIFY(!ttt.isWinningMove(Spot{Side::Right,Side::Right}, Mark::O));
+}
+
+void playTTT::test_is_winning_move_empty_but_out_of_line()
+{
+    Play ttt{};
+    ttt.setSpot(Spot::Center(), Mark::X);
+    ttt.setSpot(Spot{Side::Left, Side::Left}, Mark::X);
+
+    QVERIFY(!ttt.isWinningMove(Spot{Side::Right,Side::Center}, Mark::X));
 
 }
 
