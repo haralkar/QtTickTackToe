@@ -1,5 +1,7 @@
 #include <QtTest>
 
+#include <iostream>
+
 // add necessary includes here
 
 #include <play.h>
@@ -30,6 +32,9 @@ private slots:
     void test_is_winning_move_invalids_are_not();
 
     void test_blocking_move_isnt_winning_move_tl_diag();
+
+    void test_find_the_best_winning_move();
+    void test_find_the_best_blocking_move();
 
 
     void test_mark_flips_to_and_fro();
@@ -106,7 +111,7 @@ void playTTT::test_find_best_spot_empty()
 {
     Play ttt{};
 
-    Spot spot{ttt.findBestMove()};
+    Spot spot{ttt.findMove(Mark::X)};
     QVERIFY( spot.cross_ == Side::Center && spot.down_ == Side::Center);
 }
 
@@ -114,10 +119,10 @@ void playTTT::test_find_best_spot_a_corner()
 {
     Play ttt{};
 
-    Spot spot{ttt.findBestMove()};
+    Spot spot{ttt.findMove(Mark::X)};
     ttt.setSpot(spot, Mark::X);
 
-    Spot nextSpot{ttt.findBestMove()};
+    Spot nextSpot{ttt.findMove(Mark::X)};
     QVERIFY( nextSpot.cross_ == Side::Left && nextSpot.down_ == Side::Left);
 }
 
@@ -158,6 +163,33 @@ void playTTT::test_blocking_move_isnt_winning_move_tl_diag()
     QVERIFY(!ttt.isWinningMove(Spot{Side::Right,Side::Right}, Mark::O));
 }
 
+//*
+void playTTT::test_find_the_best_winning_move()
+{
+    Play ttt{};
+    ttt.setSpot(Spot::Center(), Mark::X);
+    ttt.setSpot(Spot{Side::Left,Side::Left}, Mark::X);
+    Spot const br{Side::Right, Side::Right};
+
+    auto spot = ttt.findBestMove(Mark::X);
+    std::cerr << "Spot: " << (int)spot.down_ << ", " << (int)spot.cross_ << "\n";
+    QVERIFY(spot == br);
+}
+
+void playTTT::test_find_the_best_blocking_move()
+{
+    Play ttt{};
+    ttt.setSpot(Spot::Center(), Mark::X);
+    ttt.setSpot(Spot{Side::Left,Side::Left}, Mark::X);
+    Spot const br{Side::Right, Side::Right};
+
+    auto spot = ttt.findBestMove(Mark::X);
+
+    std::cerr << "Spot: " << (int)spot.down_ << ", " << (int)spot.cross_ << "\n";
+    QVERIFY(spot == br);
+
+}
+// */
 void playTTT::test_is_winning_move_empty_but_out_of_line()
 {
     Play ttt{};

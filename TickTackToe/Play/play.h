@@ -30,6 +30,9 @@ struct Spot
     Side cross_;
     Side down_;
 
+    Spot(): cross_(Side::Left), down_(Side::Left){}
+    Spot(Side a, Side b): cross_(a), down_(b){}
+
     static Spot Center() {return Spot{Side::Center, Side::Center};}
     unsigned int GetIndex() const
     {
@@ -45,7 +48,7 @@ struct Spot
         return out;
     }
 
-   bool sameAs(Spot const &other) const;
+    bool sameAs(Spot const &other) const ;//{return *this == other;};
 
    Spot setSpot(Side cross, Side down);
    std::pair<Spot,Spot> left(Spot const &here) const;
@@ -65,7 +68,8 @@ public:
     Mark getSpot(const Spot &spot) const;
 
     bool isWinningMove(Spot const &spot, Mark mark) const;
-    Spot findBestMove() const;
+    Spot findMove(Mark const & mark) const;
+    Spot findBestMove(Mark const & mark) const;
 private:
     class Impl;
     Impl *impl_{};

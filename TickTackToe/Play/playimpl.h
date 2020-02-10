@@ -28,12 +28,20 @@ public:
     {
         spotify(0,1,2), // top line across
         spotify(0,4,8), // diag tl->br
+        spotify(0,3,6),
+        spotify(1,4,7),
+        spotify(2,5,8),
+        spotify(2,4,6),
+        spotify(3,4,5),
+        spotify(6,7,8),
     };
     void set(const Spot &spot, const Mark &mark);
     Mark getSpot(const Spot &spot) const;
     bool isFinished() const;
     bool isEmpty(const Spot &spot) const;
-    Spot findBestMove(std::function<bool(const Spot&)> check);
+    //std::optional<Spot> findBestMove(std::function<bool(const Spot&)> check) const;
+    std::pair<Spot,bool> findMove(std::function<bool (const Spot &)>) const;
+    std::pair<Spot,bool> findBestMove(const Mark &mark) const;
     bool isWinningMove(const Spot &spot, Mark mark) const;
 
 };
