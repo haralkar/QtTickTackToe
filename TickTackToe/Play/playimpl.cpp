@@ -49,7 +49,18 @@ std::pair<Spot,bool> Play::Impl::findMove(std::function<bool (const Spot &)> che
 
 std::pair<Spot,bool> Play::Impl::findBestMove(const Mark &mark) const
 {
-    return findMove( [&](Spot const &spot){ return isWinningMove(spot,mark);});
+    auto block = ++mark;
+    if (auto [move,found] = findMove( [&](Spot const &spot){ return isWinningMove(spot, block);})
+            ;found)
+        return {move,found};
+
+    if (auto [move,found] = findMove( [&](Spot const &spot){ return isWinningMove(spot,mark);})
+            ;found)
+        return {move,found};
+    else
+    {
+        return findMove( [&](Spot const &spot){ return isEmpty(spot);});
+    }
 }
 
 bool Play::Impl::isWinningMove(const Spot &spot, Mark mark) const
@@ -57,28 +68,16 @@ bool Play::Impl::isWinningMove(const Spot &spot, Mark mark) const
     if (!isEmpty(spot))
         return false;
 
-    std::cerr << "iWM  checking "<< (mark == Mark::X ? 'X':'O') << " " << (int)spot.cross_ << ", " << (int)spot.down_ << "\n";
-    auto current = winningIndeces_.begin();
-    auto findNext = [&](){return find_if(current, winningIndeces_.end(), [&spot](std::vector<Spot> row){return true;/*find(row.begin(),row.end(),spot)!= row.end();*/});};
-    int failover = 4;
-    for (; current != winningIndeces_.end(); current = findNext())
+    for (auto row : winningIndeces_)
     {
-        std::cerr << "Lookin at row: ";
-        for_each(current->begin(), current->end(), [](const Spot &m){ std::cerr << (int)m.cross_ << ", " << (int)m.down_ << "; "; });
+        if (find(row.begin(), row.end(), spot) == row.end())
+            continue;
+        std::cerr << "checking: ";
+        for_each(row.begin(), row.end(), [](const Spot &m){ std::cerr << (int)m.cross_ << ", " << (int)m.down_ << "; "; });
         std::cerr << "\n";
 
-        if (std::all_of(current->begin(), current->end(), [&](Spot const s){ return s == spot || getSpot(s) == mark ;}))
+        if (std::all_of(row.begin(), row.end(), [&](Spot const s){ return s == spot || getSpot(s) == mark ;}))
             return true;
-
-        if (current == winningIndeces_.end())
-            return false;
-
-        failover--;
-        if (failover <= 0)
-        {
-            std::cerr << "Failing at checking best move!";
-            return false;
-        }
     }
     return false;
 }
