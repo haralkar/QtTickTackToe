@@ -13,7 +13,7 @@ public:
 
     Mark field_[9]{};
     const std::vector<Spot> moves_ {
-        Spot::Center(),
+        Spot::FromIndex(4),
         Spot::FromIndex(0),
         Spot::FromIndex(2),
         Spot::FromIndex(6),

@@ -38,6 +38,7 @@ std::pair<Spot,bool> Play::Impl::findMove(std::function<bool (const Spot &)> che
 {
     for (auto m:  moves_)
     {
+        std::cerr << "Spot checking " << (int)m.cross_ << ", " << (int)m.down_ << "\n";
         if (check(m))
             return {m,true};
     }
@@ -56,15 +57,19 @@ bool Play::Impl::isWinningMove(const Spot &spot, Mark mark) const
     if (!isEmpty(spot))
         return false;
 
+    std::cerr << "iWM  checking "<< (mark == Mark::X ? 'X':'O') << " " << (int)spot.cross_ << ", " << (int)spot.down_ << "\n";
     auto current = winningIndeces_.begin();
-    auto findNext = [&](){return find_if(current, winningIndeces_.end(), [&spot](std::vector<Spot> row){return find(row.begin(),row.end(),spot)!= row.end();});};
-    int failover = 3;
-    for (current = findNext(); current != winningIndeces_.end();  current = findNext())
+    auto findNext = [&](){return find_if(current, winningIndeces_.end(), [&spot](std::vector<Spot> row){return true;/*find(row.begin(),row.end(),spot)!= row.end();*/});};
+    int failover = 4;
+    for (; current != winningIndeces_.end(); current = findNext())
     {
-        //std::cerr << "Checking " << current->cross_ << " "<< current->down_ << "\n";
-        std::cerr << "Checking " << int((*current)[0].cross_) << "\n";
+        std::cerr << "Lookin at row: ";
+        for_each(current->begin(), current->end(), [](const Spot &m){ std::cerr << (int)m.cross_ << ", " << (int)m.down_ << "; "; });
+        std::cerr << "\n";
+
         if (std::all_of(current->begin(), current->end(), [&](Spot const s){ return s == spot || getSpot(s) == mark ;}))
             return true;
+
         if (current == winningIndeces_.end())
             return false;
 
