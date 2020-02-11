@@ -10,15 +10,21 @@ class playTTT : public QObject
 {
     Q_OBJECT
 
+    Spot const br{Side::Right, Side::Right};
+    Play ttt{};
+    Spot center{Spot::Center()};
 public:
     playTTT();
     ~playTTT();
 
-private slots:
-    //void initTestCase();
-    //void cleanupTestCase();
+    void cleanup(){ttt.clear();}
+    void setTlCc();
 
-    void test_case1();
+private slots:
+    void initTestCase();
+    void cleanupTestCase();
+
+    void test_clear_works();
     void test_isFinished();
     void test_is_spot_empty();
     void test_set_spot_isnt_empty();
@@ -35,6 +41,7 @@ private slots:
 
     void test_find_the_best_winning_move();
     void test_find_the_best_blocking_move();
+    void test_find_winning_b4_blocking_move();
 
 
     void test_mark_flips_to_and_fro();
@@ -50,26 +57,37 @@ playTTT::~playTTT()
 
 }
 
-/*
+void playTTT::setTlCc()
+{
+    ttt.setSpot(Spot::Center(), Mark::X);
+    ttt.setSpot(Spot{Side::Left,Side::Left}, Mark::X);
+}
+
+//*
 void playTTT::initTestCase()
 {
-    ttt = Play{};
+    std::cerr << "stuff\n";
 }
 
 void playTTT::cleanupTestCase()
 {
-    ;
+    ttt.clear();
+    std::cerr << "cleaned\n";
 }
-*/
+// */
 
-void playTTT::test_case1()
+void playTTT::test_clear_works()
 {
-    Play ttt{};
+    for (int i = 0 ; i < 9 ; i++ )
+    {
+        ttt.setSpot(Spot::FromIndex(i), Mark::X);
+    }
+    cleanup();
     QTEST_ASSERT(!ttt.isFinished());
 }
 void playTTT::test_isFinished()
 {
-    Play ttt{};
+    cleanup();
     for (int i = 0 ; i < 9 ; i++ )
     {
         ttt.setSpot(Spot::FromIndex(i), Mark::X);
@@ -79,45 +97,42 @@ void playTTT::test_isFinished()
 
 void playTTT::test_is_spot_empty()
 {
+    cleanup();
 
-    Spot spot{Spot::Center()};
-    QVERIFY(spot.GetIndex() < 9);
+    QVERIFY(center.GetIndex() < 9);
 
-    Play ttt{};
-    QVERIFY(ttt.isEmpty(spot));
+    QVERIFY(ttt.isEmpty(center));
 }
 
 
 void playTTT::test_set_spot_isnt_empty()
 {
-    Spot spot{Spot::Center()};
+    cleanup();
 
-    Play ttt{};
-    ttt.setSpot(spot,Mark::X);
-    QVERIFY(!ttt.isEmpty(spot));
+    ttt.setSpot(center,Mark::X);
+    QVERIFY(!ttt.isEmpty(center));
 }
 
 void playTTT::test_get_mark()
 {
-    Spot spot{Spot::Center()};
+    cleanup();
 
-    Play ttt{};
-    ttt.setSpot(spot,Mark::X);
-    QVERIFY(ttt.getSpot(spot) == Mark::X);
+    ttt.setSpot(center,Mark::X);
+    QVERIFY(ttt.getSpot(center) == Mark::X);
 
 }
 
 void playTTT::test_find_best_spot_empty()
 {
-    Play ttt{};
+    cleanup();
 
-    Spot spot{ttt.findMove(Mark::X)};
+    Spot spot{ttt.findBestMove(Mark::X)};
     QVERIFY( spot.cross_ == Side::Center && spot.down_ == Side::Center);
 }
 
 void playTTT::test_find_best_spot_a_corner()
 {
-    Play ttt{};
+    cleanup();
 
     Spot spot{ttt.findMove(Mark::X)};
     ttt.setSpot(spot, Mark::X);
@@ -128,13 +143,16 @@ void playTTT::test_find_best_spot_a_corner()
 
 void playTTT::test_is_winning_move_invalids_are_not()
 {
-    Play ttt{};
-    ttt.setSpot(Spot::Center(), Mark::X);
-    QVERIFY(!ttt.isWinningMove(Spot::Center(), Mark::X));
+    cleanup();
+
+    ttt.setSpot(center, Mark::X);
+    QVERIFY(!ttt.isWinningMove(center, Mark::X));
 }
 
 void playTTT::test_mark_flips_to_and_fro()
 {
+    cleanup();
+
     Mark x{Mark::X};
     Mark o = ++x;
     QVERIFY( o == Mark::O);
@@ -147,9 +165,9 @@ void playTTT::test_mark_flips_to_and_fro()
 }
 void playTTT::test_is_winning_move_tl_diag()
 {
-    Play ttt{};
-    ttt.setSpot(Spot::Center(), Mark::X);
-    ttt.setSpot(Spot{Side::Left, Side::Left}, Mark::X);
+    cleanup();
+
+    setTlCc();
 
     QVERIFY(!ttt.isWinningMove(Spot{Side::Right,Side::Left}, Mark::X));
     QVERIFY(!ttt.isWinningMove(Spot{Side::Center,Side::Right}, Mark::X));
@@ -158,20 +176,19 @@ void playTTT::test_is_winning_move_tl_diag()
 
 void playTTT::test_blocking_move_isnt_winning_move_tl_diag()
 {
-    Play ttt{};
-    ttt.setSpot(Spot::Center(), Mark::X);
-    ttt.setSpot(Spot{Side::Left, Side::Left}, Mark::X);
+    cleanup();
+
+    setTlCc();
 
     QVERIFY(!ttt.isWinningMove(Spot{Side::Right,Side::Right}, Mark::O));
 }
 
-//*
+
 void playTTT::test_find_the_best_winning_move()
 {
-    Play ttt{};
-    ttt.setSpot(Spot::Center(), Mark::X);
-    ttt.setSpot(Spot{Side::Left,Side::Left}, Mark::X);
-    Spot const br{Side::Right, Side::Right};
+    cleanup();
+
+    setTlCc();
 
     auto spot = ttt.findBestMove(Mark::X);
     QVERIFY(spot == br);
@@ -179,25 +196,35 @@ void playTTT::test_find_the_best_winning_move()
 
 void playTTT::test_find_the_best_blocking_move()
 {
-    Play ttt{};
-    ttt.setSpot(Spot::Center(), Mark::X);
-    ttt.setSpot(Spot{Side::Left,Side::Left}, Mark::X);
-    Spot const br{Side::Right, Side::Right};
+    cleanup();
+
+    setTlCc();
 
     auto spot = ttt.findBestMove(Mark::X);
 
     QVERIFY(spot == br);
 
 }
-// */
+
+void playTTT::test_find_winning_b4_blocking_move()
+{
+    cleanup();
+
+    ttt.setSpot(Spot::FromIndex(0), Mark::X);
+    ttt.setSpot(Spot::FromIndex(6), Mark::X);
+    ttt.setSpot(Spot::FromIndex(1), Mark::O);
+    ttt.setSpot(Spot::FromIndex(7), Mark::O);
+    auto spot = ttt.findBestMove(Mark::X);
+
+    QVERIFY(spot == Spot::FromIndex(4));
+}
+
 void playTTT::test_is_winning_move_empty_but_out_of_line()
 {
-    Play ttt{};
-    ttt.setSpot(Spot::Center(), Mark::X);
-    ttt.setSpot(Spot{Side::Left, Side::Left}, Mark::X);
+    cleanup();
+    setTlCc();
 
     QVERIFY(!ttt.isWinningMove(Spot{Side::Right,Side::Center}, Mark::X));
-
 }
 
 

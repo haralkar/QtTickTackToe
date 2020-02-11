@@ -27,6 +27,11 @@ Play::~Play()
     delete impl_;
 }
 
+void Play::clear()
+{
+  impl_->clear();
+}
+
 bool Play::isFinished() const
 {
     return impl_->isFinished();

@@ -6,6 +6,12 @@ Play::Impl::Impl()
 
 }
 
+void Play::Impl::clear()
+{
+   for (auto i = 0; i < FieldSize; ++i)
+       field_[i] = Mark::Empty;
+}
+
 void Play::Impl::set(const Spot &spot, const Mark &mark)
 {
     field_[spot.GetIndex()] = mark;
@@ -49,11 +55,11 @@ std::pair<Spot,bool> Play::Impl::findMove(std::function<bool (const Spot &)> che
 std::pair<Spot,bool> Play::Impl::findBestMove(const Mark &mark) const
 {
     auto block = ++mark;
-    if (auto out = findMove( [&](Spot const &spot){ return isWinningMove(spot, block);})
+    if (auto out = findMove( [&](Spot const &spot){ return isWinningMove(spot,mark);})
             ;out.second)
         return out;
 
-    if (auto out = findMove( [&](Spot const &spot){ return isWinningMove(spot,mark);})
+    if (auto out = findMove( [&](Spot const &spot){ return isWinningMove(spot, block);})
             ;out.second)
         return out;
     else

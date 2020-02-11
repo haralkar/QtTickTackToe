@@ -62,6 +62,8 @@ public:
     Play();
     ~Play();
 
+    void clear();
+
     bool isFinished() const ;
     bool isEmpty(const Spot &spot) const;
     void setSpot(const Spot &spot, const Mark &mark);

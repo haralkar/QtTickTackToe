@@ -6,12 +6,16 @@
 #include <vector>
 #include <functional>
 
+constexpr int FieldSize{9};
+
 class Play::Impl
 {
 public:
     Impl();
 
-    Mark field_[9]{};
+    void clear();
+
+    Mark field_[FieldSize]{};
     const std::vector<Spot> moves_ {
         Spot::FromIndex(4),
         Spot::FromIndex(0),
