@@ -38,7 +38,6 @@ std::pair<Spot,bool> Play::Impl::findMove(std::function<bool (const Spot &)> che
 {
     for (auto m:  moves_)
     {
-        std::cerr << "Spot checking " << (int)m.cross_ << ", " << (int)m.down_ << "\n";
         if (check(m))
             return {m,true};
     }
@@ -50,13 +49,13 @@ std::pair<Spot,bool> Play::Impl::findMove(std::function<bool (const Spot &)> che
 std::pair<Spot,bool> Play::Impl::findBestMove(const Mark &mark) const
 {
     auto block = ++mark;
-    if (auto [move,found] = findMove( [&](Spot const &spot){ return isWinningMove(spot, block);})
-            ;found)
-        return {move,found};
+    if (auto out = findMove( [&](Spot const &spot){ return isWinningMove(spot, block);})
+            ;out.second)
+        return out;
 
-    if (auto [move,found] = findMove( [&](Spot const &spot){ return isWinningMove(spot,mark);})
-            ;found)
-        return {move,found};
+    if (auto out = findMove( [&](Spot const &spot){ return isWinningMove(spot,mark);})
+            ;out.second)
+        return out;
     else
     {
         return findMove( [&](Spot const &spot){ return isEmpty(spot);});
@@ -72,9 +71,6 @@ bool Play::Impl::isWinningMove(const Spot &spot, Mark mark) const
     {
         if (find(row.begin(), row.end(), spot) == row.end())
             continue;
-        std::cerr << "checking: ";
-        for_each(row.begin(), row.end(), [](const Spot &m){ std::cerr << (int)m.cross_ << ", " << (int)m.down_ << "; "; });
-        std::cerr << "\n";
 
         if (std::all_of(row.begin(), row.end(), [&](Spot const s){ return s == spot || getSpot(s) == mark ;}))
             return true;

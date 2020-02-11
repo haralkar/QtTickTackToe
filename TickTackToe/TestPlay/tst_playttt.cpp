@@ -174,7 +174,6 @@ void playTTT::test_find_the_best_winning_move()
     Spot const br{Side::Right, Side::Right};
 
     auto spot = ttt.findBestMove(Mark::X);
-    std::cerr << "Spot: " << (int)spot.down_ << ", " << (int)spot.cross_ << "\n";
     QVERIFY(spot == br);
 }
 
@@ -187,7 +186,6 @@ void playTTT::test_find_the_best_blocking_move()
 
     auto spot = ttt.findBestMove(Mark::X);
 
-    std::cerr << "Spot: " << (int)spot.down_ << ", " << (int)spot.cross_ << "\n";
     QVERIFY(spot == br);
 
 }
