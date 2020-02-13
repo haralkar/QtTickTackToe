@@ -10,6 +10,7 @@ BoxItem::BoxItem(int x, int y, QGraphicsItem *parent)
 {
     m_pix_X=QPixmap(QLatin1String(":/images/images/cross.png"));
     m_pix_O=QPixmap(QLatin1String(":/images/images/oohh.png"));
+    m_pix_L=QPixmap(QLatin1String(":/images/images/empty.png"));
 
     setGraphicsItem(this);
 }
@@ -46,7 +47,6 @@ void BoxItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
    Q_UNUSED(option);
 
     QRectF frame(QPointF(m_X*60, m_Y*60), geometry().size());
-    //const QSize psSize = m_pix.size();
     QGradientStops stops;
 
     QPointF pixpos { 0, 0};
@@ -54,7 +54,7 @@ void BoxItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     painter->drawPixmap(pixpos,
                 m_mark== MarkType::Omark? m_pix_O:
                 m_mark== MarkType::Xmark? m_pix_X
-                          :m_pix_L );
+                          :m_pix_L);
 }
 
 
