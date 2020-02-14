@@ -9,8 +9,16 @@ enum class Mark {
     X,
     O,
 };
-//Mark operator++(Mark other);
-inline Mark operator++(Mark other)
+inline Mark operator++(Mark  &other)
+{
+    switch (other) {
+        case Mark::X: other = Mark::O; break;
+        case Mark::O: other = Mark::X; break;
+        default: break;
+    }
+    return other;
+}
+inline Mark operator++(Mark const &other)
 {
     switch (other) {
         case Mark::X: return Mark::O;
@@ -18,6 +26,14 @@ inline Mark operator++(Mark other)
         default: return Mark::Empty;
     }
 }
+//*Mark operator++(Mark other);
+inline Mark operator++(Mark &lhs, int)
+{
+   auto thisOne { lhs};
+   lhs = ++lhs;
+   return thisOne;
+}
+// */
 
 enum class Side : unsigned int
 {

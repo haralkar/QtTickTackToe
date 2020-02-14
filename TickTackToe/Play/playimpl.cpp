@@ -56,17 +56,20 @@ std::pair<Spot,bool> Play::Impl::findMove(Mark const &mark, std::function<bool (
 
 std::pair<Spot,bool> Play::Impl::findBestMove(const Mark &mark) const
 {
-    auto checking = mark;
+    Mark checking { mark};
     do
     {
+        std::cerr << "check " << (checking == Mark::X? 'X':'O') << "\n";
         if (auto out = findMove( checking, [&](Spot const &spot){ return isWinningMove(spot,checking);})
             ;out.second)
         {
             return out;
         }
-        ++ checking;
+        std::cerr << "No direct win lets ";
+        ++checking;
     } while (checking != mark);
 
+    std::cerr << " ''random'' move\n";
     return findMove( mark, [&](Spot const &spot){ return isEmpty(spot);});
 }
 

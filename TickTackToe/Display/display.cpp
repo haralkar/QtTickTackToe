@@ -66,7 +66,7 @@ void Display::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
        item->markX();
        m_game.setSpot(Spot::FromIndex(col+row*3),Mark::X);
-       Spot oh = m_game.findMove(Mark::O);
+       Spot oh = m_game.findBestMove(Mark::O);
        m_game.setSpot(oh,Mark::O);
        int c = (unsigned int)oh.down_;
        int r = (unsigned int)oh.cross_;

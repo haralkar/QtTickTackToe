@@ -43,6 +43,7 @@ private slots:
 
     void test_find_the_best_winning_move();
     void test_find_the_best_blocking_move();
+    void test_find_winning_b4_blocking_moveII();
     void test_find_winning_b4_blocking_move();
 
 
@@ -166,10 +167,12 @@ void playTTT::test_mark_flips_to_and_fro()
     cleanup();
 
     Mark x{Mark::X};
-    Mark o = ++x;
-    QVERIFY( o == Mark::O);
+    Mark o = x;
+    o++;
+    QVERIFY( o != x);
 
-    Mark back = ++o;
+    Mark back = o;
+    back++;
     QVERIFY( back == Mark::X);
 
     Mark same = ++Mark::Empty;
@@ -217,6 +220,23 @@ void playTTT::test_find_the_best_blocking_move()
     QVERIFY(spot == br);
 
 }
+
+void playTTT::test_find_winning_b4_blocking_moveII()
+{
+    cleanup();
+
+    ttt.setSpot(Spot::FromIndex(0), Mark::X); // X12
+    ttt.setSpot(Spot::FromIndex(3), Mark::X); // XO5
+    ttt.setSpot(Spot::FromIndex(4), Mark::O); // o78
+
+    Spot shouldPick(Spot::FromIndex(6));
+    QVERIFY(ttt.isWinningMove(shouldPick, Mark::X));
+
+    auto spot = ttt.findBestMove(Mark::O);
+    std::cerr << " picked: " << (int)spot.down_ << -(int)spot.cross_ << "\n";
+    QVERIFY(spot == shouldPick);
+}
+
 
 void playTTT::test_find_winning_b4_blocking_move()
 {
