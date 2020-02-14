@@ -33,6 +33,8 @@ private slots:
     void test_find_best_spot_empty();
     void test_find_best_spot_a_corner();
 
+    void test_opposed_corners_side_up();
+
     void test_is_winning_move_tl_diag();
     void test_is_winning_move_empty_but_out_of_line();
     void test_is_winning_move_invalids_are_not();
@@ -137,8 +139,18 @@ void playTTT::test_find_best_spot_a_corner()
     Spot spot{ttt.findMove(Mark::X)};
     ttt.setSpot(spot, Mark::X);
 
-    Spot nextSpot{ttt.findMove(Mark::X)};
+    Spot nextSpot{ttt.findMove(Mark::O)};
     QVERIFY( nextSpot.cross_ == Side::Left && nextSpot.down_ == Side::Left);
+}
+
+void playTTT::test_opposed_corners_side_up()
+{
+    cleanup();
+    ttt.setSpot(Spot::FromIndex(0), Mark::X); // X
+    ttt.setSpot(Spot::FromIndex(4), Mark::O); //  O
+    ttt.setSpot(Spot::FromIndex(8), Mark::X); //  oX
+
+    QVERIFY(ttt.findBestMove(Mark::O) == Spot::FromIndex(7)); // 7
 }
 
 void playTTT::test_is_winning_move_invalids_are_not()
@@ -211,12 +223,12 @@ void playTTT::test_find_winning_b4_blocking_move()
     cleanup();
 
     ttt.setSpot(Spot::FromIndex(0), Mark::X);
-    ttt.setSpot(Spot::FromIndex(6), Mark::X);
-    ttt.setSpot(Spot::FromIndex(1), Mark::O);
-    ttt.setSpot(Spot::FromIndex(7), Mark::O);
+    ttt.setSpot(Spot::FromIndex(6), Mark::X); // XO
+    ttt.setSpot(Spot::FromIndex(1), Mark::O); // x
+    ttt.setSpot(Spot::FromIndex(7), Mark::O); // XO
     auto spot = ttt.findBestMove(Mark::X);
 
-    QVERIFY(spot == Spot::FromIndex(4));
+    QVERIFY(spot == Spot::FromIndex(3));
 }
 
 void playTTT::test_is_winning_move_empty_but_out_of_line()

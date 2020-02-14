@@ -60,17 +60,10 @@ bool Play::isWinningMove(const Spot &spot, Mark mark) const
 
 Spot Play::findMove(Mark const & mark) const
 {
-    return impl_-> findBestMove(mark).first;
+    return impl_-> findMove(mark,[&](Spot const &spot){return isEmpty(spot);}).first;
 }
 
 Spot Play::findBestMove(const Mark &mark) const
 {
-    auto blockWith = ++mark;
-    if (auto [spot, found] =  impl_->findBestMove(blockWith)
-            ; found)
-    {
-        return spot;
-    }
-
     return impl_->findBestMove(mark).first;
 }

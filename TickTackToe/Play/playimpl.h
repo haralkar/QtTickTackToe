@@ -16,16 +16,16 @@ public:
     void clear();
 
     Mark field_[FieldSize]{};
-    const std::vector<Spot> moves_ {
-        Spot::FromIndex(4),
-        Spot::FromIndex(0),
-        Spot::FromIndex(2),
-        Spot::FromIndex(6),
-        Spot::FromIndex(8),
-        Spot::FromIndex(7),
-        Spot::FromIndex(1),
-        Spot::FromIndex(3),
-        Spot::FromIndex(5),
+    const std::vector<std::pair<Spot,Spot>> moves_ {
+        {Spot::FromIndex(4),Spot::FromIndex(4)},
+        {Spot::FromIndex(0),Spot::FromIndex(7)},
+        {Spot::FromIndex(2),Spot::FromIndex(1)},
+        {Spot::FromIndex(6),Spot::FromIndex(3)},
+        {Spot::FromIndex(8),Spot::FromIndex(5)},
+        {Spot::FromIndex(7),Spot::FromIndex(0)},
+        {Spot::FromIndex(1),Spot::FromIndex(2)},
+        {Spot::FromIndex(3),Spot::FromIndex(6)},
+        {Spot::FromIndex(5),Spot::FromIndex(8)},
     };
     std::vector<Spot> spotify(int a, int b, int c) {return {Spot::FromIndex(a),Spot::FromIndex(b),Spot::FromIndex(c)};}
     const std::vector<std::vector<Spot>> winningIndeces_
@@ -44,7 +44,7 @@ public:
     bool isFinished() const;
     bool isEmpty(const Spot &spot) const;
     //std::optional<Spot> findBestMove(std::function<bool(const Spot&)> check) const;
-    std::pair<Spot,bool> findMove(std::function<bool (const Spot &)>) const;
+    std::pair<Spot,bool> findMove(Mark const &mark, std::function<bool (const Spot &)>) const;
     std::pair<Spot,bool> findBestMove(const Mark &mark) const;
     bool isWinningMove(const Spot &spot, Mark mark) const;
 
