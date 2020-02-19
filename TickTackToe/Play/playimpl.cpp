@@ -99,3 +99,5 @@ bool Play::Impl::isWinningMove(const Spot &spot, Mark mark) const
     return false;
 }
 
+
+std::vector<Spot> spotify(int a, int b, int c) {return {Spot::FromIndex(a),Spot::FromIndex(b),Spot::FromIndex(c)};}

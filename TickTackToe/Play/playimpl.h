@@ -8,14 +8,7 @@
 
 constexpr int FieldSize{9};
 
-class Play::Impl
-{
-public:
-    Impl();
-
-    void clear();
-
-    Mark field_[FieldSize]{};
+    std::vector<Spot> spotify(int a, int b, int c);
 
     const std::vector<std::pair<Spot,Spot>> moves_ {
         {Spot::FromIndex(4),Spot::FromIndex(4)},
@@ -28,7 +21,6 @@ public:
         {Spot::FromIndex(3),Spot::FromIndex(6)},
         {Spot::FromIndex(5),Spot::FromIndex(8)},
     };
-    std::vector<Spot> spotify(int a, int b, int c) {return {Spot::FromIndex(a),Spot::FromIndex(b),Spot::FromIndex(c)};}
     const std::vector<std::vector<Spot>> winningIndeces_
     {
         spotify(0,1,2), // top line across
@@ -41,11 +33,19 @@ public:
         spotify(6,7,8),
     };
 
+class Play::Impl
+{
+public:
+    Impl();
+
+    void clear();
+
+    Mark field_[FieldSize]{};
+
     void set(const Spot &spot, const Mark &mark);
     Mark getSpot(const Spot &spot) const;
     bool isFinished() const;
     bool isEmpty(const Spot &spot) const;
-    //std::optional<Spot> findBestMove(std::function<bool(const Spot&)> check) const;
     std::pair<Spot,bool> findMove(Mark const &mark, std::function<bool (const Spot &)>) const;
     std::pair<Spot,bool> findBestMove(const Mark &mark) const;
     bool isWinningMove(const Spot &spot, Mark mark) const;
