@@ -16,6 +16,7 @@ public:
     void clear();
 
     Mark field_[FieldSize]{};
+
     const std::vector<std::pair<Spot,Spot>> moves_ {
         {Spot::FromIndex(4),Spot::FromIndex(4)},
         {Spot::FromIndex(0),Spot::FromIndex(7)},
@@ -39,6 +40,7 @@ public:
         spotify(3,4,5),
         spotify(6,7,8),
     };
+
     void set(const Spot &spot, const Mark &mark);
     Mark getSpot(const Spot &spot) const;
     bool isFinished() const;
@@ -47,6 +49,13 @@ public:
     std::pair<Spot,bool> findMove(Mark const &mark, std::function<bool (const Spot &)>) const;
     std::pair<Spot,bool> findBestMove(const Mark &mark) const;
     bool isWinningMove(const Spot &spot, Mark mark) const;
+
+
+    //"private:"
+    std::vector<Spot> Corners() const
+    {
+        return {Spot::FromIndex(0),Spot::FromIndex(2),Spot::FromIndex(6),Spot::FromIndex(8)};
+    }
 
 };
 

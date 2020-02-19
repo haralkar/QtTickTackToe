@@ -4,6 +4,8 @@
 #include "Play_global.h"
 
 
+#include <vector>
+
 enum class Mark {
     Empty,
     X,

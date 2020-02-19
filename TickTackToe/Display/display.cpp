@@ -62,16 +62,18 @@ void Display::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
     if (auto item = dynamic_cast<BoxItem*>(m_grid->itemAt(row,col)->graphicsItem()))
     {
-       std::cerr<<"At Pos: " << row << col << ", " << "\n";
+       std::cerr<<"At Pos: " << row+1 << -(col+1) << ", " << "(from 1-1)\n";
 
-       item->markX();
        m_game.setSpot(Spot::FromIndex(col+row*3),Mark::X);
+
        Spot oh = m_game.findBestMove(Mark::O);
        m_game.setSpot(oh,Mark::O);
        int c = (unsigned int)oh.down_;
        int r = (unsigned int)oh.cross_;
        auto itemO = dynamic_cast<BoxItem*>(m_grid->itemAt(r,c)->graphicsItem());
        itemO->markO();
+
+       item->markX();
        m_grid->invalidate();
     }
     else

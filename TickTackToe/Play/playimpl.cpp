@@ -56,6 +56,7 @@ std::pair<Spot,bool> Play::Impl::findMove(Mark const &mark, std::function<bool (
 
 std::pair<Spot,bool> Play::Impl::findBestMove(const Mark &mark) const
 {
+    std::cerr << "Winnig move ";
     Mark checking { mark};
     do
     {
@@ -65,9 +66,18 @@ std::pair<Spot,bool> Play::Impl::findBestMove(const Mark &mark) const
         {
             return out;
         }
-        std::cerr << "No direct win lets ";
+        std::cerr << "No direct win lets defense ";
         ++checking;
     } while (checking != mark);
+
+    /*
+    const auto other {++mark};
+    for (auto cs {Corners()}; auto c : cs )
+    {
+
+    }
+    // */
+
 
     std::cerr << " ''random'' move\n";
     return findMove( mark, [&](Spot const &spot){ return isEmpty(spot);});
