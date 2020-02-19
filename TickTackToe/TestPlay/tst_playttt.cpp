@@ -46,7 +46,7 @@ private slots:
     void test_find_winning_b4_blocking_moveII();
     void test_find_winning_b4_blocking_move();
 
-    void test_corner_othe_side_stategy();
+    //void test_corner_othe_side_stategy();
 
 
     void test_mark_flips_to_and_fro();
