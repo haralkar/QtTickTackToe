@@ -52,9 +52,9 @@ Mark Play::getSpot(const Spot &spot) const
     return impl_->getSpot(spot);
 }
 
-bool Play::isWinningMove(const Spot &spot, Mark mark) const
+bool Play::isWinningMove(const Spot &spot, const Mark &mark) const
 {
-    return impl_-> isWinningMove(spot, mark) ;
+    return impl_-> isWinningMove(spot, mark);
 }
 
 
